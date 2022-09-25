@@ -6,9 +6,10 @@ locals {
   attach_policy = var.attach_require_latest_tls_policy || var.attach_elb_log_delivery_policy || var.attach_lb_log_delivery_policy || var.attach_deny_insecure_transport_policy || var.attach_policy
 
   # Variables with type `any` should be jsonencode()'d when value is coming from Terragrunt
-  grants          = try(jsondecode(var.grant), var.grant)
-  cors_rules      = try(jsondecode(var.cors_rule), var.cors_rule)
-  lifecycle_rules = try(jsondecode(var.lifecycle_rule), var.lifecycle_rule)
+  grants              = try(jsondecode(var.grant), var.grant)
+  cors_rules          = try(jsondecode(var.cors_rule), var.cors_rule)
+  lifecycle_rules     = try(jsondecode(var.lifecycle_rule), var.lifecycle_rule)
+  intelligent_tiering = try(jsondecode(var.intelligent_tiering), var.intelligent_tiering)
 }
 
 resource "aws_s3_bucket" "this" {
@@ -20,23 +21,6 @@ resource "aws_s3_bucket" "this" {
   force_destroy       = var.force_destroy
   object_lock_enabled = var.object_lock_enabled
   tags                = var.tags
-
-  lifecycle {
-    ignore_changes = [
-      acceleration_status,
-      acl,
-      grant,
-      cors_rule,
-      lifecycle_rule,
-      logging,
-      object_lock_configuration,
-      replication_configuration,
-      request_payer,
-      server_side_encryption_configuration,
-      versioning,
-      website
-    ]
-  }
 }
 
 resource "aws_s3_bucket_logging" "this" {
@@ -129,7 +113,7 @@ resource "aws_s3_bucket_website_configuration" "this" {
       }
 
       redirect {
-        host_name               = try(routing_rule.value.redirect["hostname"], null)
+        host_name               = try(routing_rule.value.redirect["host_name"], null)
         http_redirect_code      = try(routing_rule.value.redirect["http_redirect_code"], null)
         protocol                = try(routing_rule.value.redirect["protocol"], null)
         replace_key_prefix_with = try(routing_rule.value.redirect["replace_key_prefix_with"], null)
@@ -706,4 +690,32 @@ resource "aws_s3_bucket_ownership_controls" "this" {
     aws_s3_bucket_public_access_block.this,
     aws_s3_bucket.this
   ]
+}
+
+resource "aws_s3_bucket_intelligent_tiering_configuration" "this" {
+  for_each = { for k, v in local.intelligent_tiering : k => v if local.create_bucket }
+
+  name   = each.key
+  bucket = aws_s3_bucket.this[0].id
+  status = try(tobool(each.value.status) ? "Enabled" : "Disabled", title(lower(each.value.status)), null)
+
+  # Max 1 block - filter
+  dynamic "filter" {
+    for_each = length(try(flatten([each.value.filter]), [])) == 0 ? [] : [true]
+
+    content {
+      prefix = try(each.value.filter.prefix, null)
+      tags   = try(each.value.filter.tags, null)
+    }
+  }
+
+  dynamic "tiering" {
+    for_each = each.value.tiering
+
+    content {
+      access_tier = tiering.key
+      days        = tiering.value.days
+    }
+  }
+
 }

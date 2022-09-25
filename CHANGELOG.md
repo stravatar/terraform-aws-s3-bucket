@@ -2,6 +2,69 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.4.0](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/compare/v3.3.1...v3.4.0) (2022-08-26)
+
+
+### Features
+
+* Added source_hash parameter to modules/object ([#178](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/issues/178)) ([6cf4584](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/commit/6cf45848d014f737e5580fc1b2d9dbd8469e0529))
+
+### [3.3.1](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/compare/v3.3.0...v3.3.1) (2022-08-26)
+
+
+### Bug Fixes
+
+* Remove deprecated attributes from ignore_changes ([#179](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/issues/179)) ([8366ccc](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/commit/8366cccab085e73f794af1e2f4ec4d1abd240806))
+
+## [3.3.0](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/compare/v3.2.4...v3.3.0) (2022-06-17)
+
+
+### Features
+
+* Add the intelligent tiering configuration ([#167](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/issues/167)) ([73c48d6](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/commit/73c48d64b26f44ba13dc8113fbf084ef444f3338))
+
+### [3.2.4](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/compare/v3.2.3...v3.2.4) (2022-06-14)
+
+
+### Bug Fixes
+
+* Remove hardcoded aws partition in notifications sub-module ([#165](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/issues/165)) ([c51db21](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/commit/c51db21c7dd0f177dae890a108f625bffe4320f6))
+
+### [3.2.3](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/compare/v3.2.2...v3.2.3) (2022-05-25)
+
+
+### Bug Fixes
+
+* Revert change for grant in aws_s3_bucket_acl resource ([#164](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/issues/164)) ([ec88013](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/commit/ec88013616a049434aad08590bbf478f2e05c597))
+
+### [3.2.2](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/compare/v3.2.1...v3.2.2) (2022-05-25)
+
+
+### Bug Fixes
+
+* Fixed issue with multiple grants in aws_s3_bucket_acl ([#163](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/issues/163)) ([9ed6eaa](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/commit/9ed6eaae0c2d5786275ae4199bd5b02135125fcf))
+
+### [3.2.1](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/compare/v3.2.0...v3.2.1) (2022-05-18)
+
+
+### Bug Fixes
+
+* Allow setup eventbridge without notifications ([#160](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/issues/160)) ([31b8e9d](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/commit/31b8e9dcd1793e77b1cd0242a42d7b0abee66b4e))
+
+## [3.2.0](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/compare/v3.1.1...v3.2.0) (2022-05-04)
+
+
+### Features
+
+* Added wrappers automatically generated via hook ([#156](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/issues/156)) ([3634462](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/commit/363446280bfd0a4ed56d07c6538bf9e3e92c6c0e))
+
+### [3.1.1](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/compare/v3.1.0...v3.1.1) (2022-04-26)
+
+
+### Bug Fixes
+
+* Key `host_name` on website routing rules redirect ([#152](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/issues/152)) ([3ca8327](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/commit/3ca83273992c7083a91a2d5c74b4b91e5c9add79))
+
 ## [3.1.0](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/compare/v3.0.1...v3.1.0) (2022-04-15)
 
 

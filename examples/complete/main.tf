@@ -95,7 +95,7 @@ module "cloudfront_log_bucket" {
   ]
 
   owner = {
-    id = "457414f555e45c2e6fe1069d1a527a90d6337e1acb012ba99f3833859b23d338"
+    id = data.aws_canonical_user_id.current.id
   }
 
   force_destroy = true
@@ -293,4 +293,35 @@ module "s3_bucket" {
       }
     },
   ]
+
+  intelligent_tiering = {
+    general = {
+      status = "Enabled"
+      filter = {
+        prefix = "/"
+        tags = {
+          Environment = "dev"
+        }
+      }
+      tiering = {
+        ARCHIVE_ACCESS = {
+          days = 180
+        }
+      }
+    },
+    documents = {
+      status = false
+      filter = {
+        prefix = "documents/"
+      }
+      tiering = {
+        ARCHIVE_ACCESS = {
+          days = 125
+        }
+        DEEP_ARCHIVE_ACCESS = {
+          days = 200
+        }
+      }
+    }
+  }
 }
